@@ -1,0 +1,166 @@
+body{
+    background-color: rgb(237, 237, 237);
+}
+header{
+    position: relative;
+    width: 100%;
+    height: 100px;
+    background-color:  rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+
+}   
+
+.head-top .text-hd{
+    color: #000;
+    max-width: 200px;
+
+}
+.head-top .text-hd{
+    color: rgb(0, 0, 0);
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: large;
+    display: block;
+    padding-top: 10px;
+}
+.head-top .fa-user{
+    display: none;
+    color: #000000;
+    max-width: fit-content;
+    margin-right: 20px;
+    bottom: 50%;
+}
+ @media screen and (max-width: 767px){
+    
+    .head-top .text-hd{
+        display: none;
+    }
+    .head-top .fa-user{
+        display: block;  
+        
+    }
+ }
+.muiBox{
+    padding-top:10px;
+}
+.muiBox .avt{
+    height: 220px;
+    width: 220px;
+    border-radius: 50%;
+    position: absolute;
+    margin-top:30px;
+    margin-left: 200px;
+    overflow: hidden;
+    border: 10px solid #ffffff;
+    
+}
+
+.muiBox .avt img{
+    width: 100%;
+
+}
+
+.muiBox .inf-box{
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    margin-top: 100px;
+    padding-bottom: 20px;
+ }
+
+ .muiBox .inf-box .inf{
+    height: auto;
+    width: auto;
+    margin-left: 350px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+ }
+
+ .muiBox .inf-box .inf i{
+    color: #00000092;
+ }
+
+ .muiBox .inf-box .inf a{
+    color: #00000092;
+ }
+
+ .muiBox .inf-box .inf span{
+    display: block;
+    padding-left: 10px;
+    font-size: x-large;
+    font-weight: 500;
+ }
+
+ .muiBox .inf-box .btn-ed{
+    width: auto;
+    margin-left: 340px;
+ } 
+
+ .muiBox .inf-box .btn-ed a{
+    border-radius: 20px;
+    font-weight: 500;
+ }
+
+ .muiBox-root{
+    padding-top: 5px;
+ }
+
+ .muiBox-root .full-inf{
+
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    padding-bottom: 40px;
+ }
+
+ .muiBox-root .full-inf .sm-inf{
+    width: 100%;
+    height: 200px;
+    margin: 2px;
+ }
+
+ .muiBox-root .full-inf .sm-inf .xsm-inf{
+    height: 50%;
+    width: 100%;
+    padding-top: 30px;
+    padding-left: 100px;
+ }
+
+ .muiBox-root .full-inf .sm-inf .xsm-inf a{
+    font-weight: 500;
+ }
+
+ .muiBox-root .full-inf .sm-inf .xsm-inf .inf-bx{
+    border-bottom: #acacac 1px solid;
+    padding-bottom: 5px;
+    color: #353535;
+    padding-left: 10px;
+    margin-right: 100px;
+ }
+
+
+ footer{
+    margin-top: 50px;
+    display: flex;
+}
+
+footer .ft-inf{
+    width: 60%;
+    height: 100%;
+    padding-bottom: 10px;
+    padding-left: 10%;
+    color: #000000b6;
+}
+
+footer .ft-inf a{
+    font-size: smaller;
+}
+
+footer .ft-img{
+    width: 40%;
+    text-align: center;
+}
+footer .ft-img a{
+    display: block;
+    font-size: smaller;
+    padding-top: 5px;
+}

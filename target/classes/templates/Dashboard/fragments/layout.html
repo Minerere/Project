@@ -1,0 +1,176 @@
+<th:block th:fragment="head">
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="/dashboard/css/default.css">
+	<link rel="stylesheet" href="/dashboard/css/style.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+		integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+		integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+	<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</th:block>
+<th:block th:fragment="sidebar">
+	<section id="sidebar" class="">
+		<div class="sidebar__container">
+			<div class="profile">
+				<div class="profile__body">
+					<div class="avatar">
+						<img th:src="${session.user?.image}" alt="">
+					</div>
+					<div class="body">
+						<div class="information">
+							<div class="username">Xin chào, <a th:text="${session.user.username}"
+									href="/dashboard/index" style="color: #000; text-decoration: none;"></a></div>
+							<a href="/account/information" class="link">Chỉnh sửa hồ sơ</a>
+						</div>
+					</div>
+				</div>
+				<div class="profile__footer">
+					<div class="act-btns" th:unless="${loggedIn}">
+						<a th:href="@{/logout}" class="btn btn-sign-out">Đăng xuất</a>
+					</div>
+				</div>
+			</div>
+			<div class="composite-menu">
+				<div class="menu">
+					<div class="menu-title">Sản phẩm</div>
+					<ul class="menu-items">
+						<li>
+							<a href="/dashboard/addProduct">
+								<ion-icon name="add-circle" class="menu__icon"></ion-icon>
+								<span>Thêm mới</span>
+							</a>
+						</li>
+						<li>
+							<a href="/dashboard/productTable">
+								<ion-icon name="layers" class="menu__icon"></ion-icon>
+								<span>Danh sách</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="menu">
+					<div class="menu-title">Thương hiệu</div>
+					<ul class="menu-items">
+						<li>
+							<a href="/dashboard/addBrand">
+								<ion-icon name="add-circle" class="menu__icon"></ion-icon>
+								<span>Thêm mới</span>
+							</a>
+						</li>
+						<li>
+							<a href="/dashboard/brandTable">
+								<ion-icon name="layers" class="menu__icon"></ion-icon>
+								<span>Quản lý</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="menu">
+					<div class="menu-title">Thể loại</div>
+					<ul class="menu-items">
+						<li>
+							<a href="/dashboard/addCategory">
+								<ion-icon name="add-circle" class="menu__icon"></ion-icon>
+								<span>Thêm mới</span>
+							</a>
+						</li>
+						<li>
+							<a href="/dashboard/categoryTable">
+								<ion-icon name="layers" class="menu__icon"></ion-icon>
+								<span>Quản lý</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<!-- <div class="menu">
+					<div class="menu-title">Ghim sản phẩm</div>
+					<ul class="menu-items">
+						<li>
+							<a href="#">
+								<ion-icon name="layers" class="menu__icon"></ion-icon>
+								<span>Danh sách</span>
+							</a>
+						</li>
+					</ul>
+				</div> -->
+				<div class="menu">
+					<div class="menu-title">Người dùng</div>
+					<ul class="menu-items">
+						<li>
+							<a href="/dashboard/addUser">
+								<ion-icon name="add-circle" class="menu__icon"></ion-icon>
+								<span>Thêm mới</span>
+							</a>
+						</li>
+						<li>
+							<a href="/dashboard/userTable">
+								<ion-icon name="layers" class="menu__icon"></ion-icon>
+								<span>Danh sách</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="menu">
+					<div class="menu-title">Đơn hàng</div>
+					<ul class="menu-items">
+						<li>
+							<a href="/dashboard/orders/list">
+								<ion-icon name="layers" class="menu__icon"></ion-icon>
+								<span>Danh sách</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="menu">
+					<div class="menu-title">Mã giảm giá</div>
+					<ul class="menu-items">
+						<li>
+							<a href="/dashboard/addDiscountCode">
+								<ion-icon name="add-circle" class="menu__icon"></ion-icon>
+								<span>Thêm mới</span>
+							</a>
+						</li>
+						<li>
+							<a href="/dashboard/discountCodeTable">
+								<ion-icon name="layers" class="menu__icon"></ion-icon>
+								<span>Quản lý</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+</th:block>
+<th:block th:fragment="navbar">
+	<div id="navbar">
+		<div class="navbar__logo">
+			<a href="/index"><img src="/User/image/logo/logo-M.png" alt=""></a>
+		</div>
+		<div class="navbar__container">
+			<div class="menu">
+				<button id="toggleSidebar">
+					<ion-icon name="menu-sharp"></ion-icon>
+				</button>
+			</div>
+		</div>
+	</div>
+</th:block>
+<th:block th:fragment="footer">
+	<script src="/dashboard/js/sidebar.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+		crossorigin="anonymous"></script>
+	<script src="/Dashboard/js/scripts.js"></script>
+</th:block>

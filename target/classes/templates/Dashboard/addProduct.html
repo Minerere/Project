@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <th:block th:insert="~{Dashboard/fragments/layout :: head}"></th:block>
+    <title>Thêm/Sửa sản phẩm</title>
+</head>
+
+<body id="root">
+    <th:block th:insert="~{Dashboard/fragments/layout :: sidebar}"></th:block>
+    <section id="main">
+        <th:block th:insert="~{Dashboard/fragments/layout :: navbar}"></th:block>
+        <div id="content">
+            <div class="header">
+                <h1 class="">Thêm/Sửa sản phẩm</h1>
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item">Trang quản trị</li>
+                    <li class="breadcrumb-item">Sản phẩm</li>
+                    <li class="breadcrumb-item active">Thêm/Sửa sản phẩm</li>
+                </ol>
+            </div>
+            <div class="container">
+                <form action="/dashboard/addProduct/save-or-update" method="post" th:object="${productE}" id="form"
+                    enctype="multipart/form-data">
+                    <input th:field="*{id}" name="id" hidden>
+                    <input th:field="*{createdAt}" name="createdAt" hidden>
+                    <input th:field="*{updatedAt}" name="createdAt" hidden>
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <div class="form-floating">
+                                <input th:field="*{name}" type="text" name="name" class="form-control" placeholder=" "
+                                    required id="name">
+                                <label for="name">Tên sản phẩm</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="form-floating">
+                                <input th:field="*{quantity}" name="quantity" type="number" class="form-control"
+                                    placeholder=" " required id="quantity">
+                                <label for="quantity">Số lượng</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="form-floating">
+                                <input th:field="*{price}" name="price" type="number" class="form-control"
+                                    placeholder=" " required id="price">
+                                <label for="price">Giá cũ</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="form-floating">
+                                <input th:field="*{promotionalPrice}" name="promotionalPrice" type="number"
+                                    class="form-control" placeholder=" " required id="promotionalPrice">
+                                <label for="promotionalPrice">Giá mới</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="form-floating">
+                                <select th:field="*{productBrand.id}" class=" form-select"
+                                    aria-label="Default select example">
+                                    <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.name}">
+                                    </option>
+                                </select>
+                                <label class="form-lable mb-2" for="productBrand.id">Thương hiệu</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="form-floating">
+                                <select th:field="*{productCategory.id}" class=" form-select"
+                                    aria-label="Default select example">
+                                    <option th:each="category : ${categoris}" th:value="${category.id}"
+                                        th:text="${category.name}"></option>
+                                </select>
+                                <label class="form-lable mb-2" for="productCategory.id">Thể loại</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-2">
+                            <label for="file" class="form-label">Hình ảnh</label>
+                            <input type="file" id="file" name="file" class="form-control" required accept="image/*">
+                        </div>
+                        <div class="col-md-12 mb-2">
+                            <div class="form-floating">
+                                <textarea th:field="*{description}" type="text" name="description" style="height: 200px;" class="form-control"
+                                    placeholder=" " required id="description"></textarea>
+                                <label for="description">Mô tả</label>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                </form>
+                <div th:if="${error != null}" id="errorDiv" class="alert alert-danger mt-2">
+					<span th:text="${error}"></span>
+				</div>
+            </div>
+        </div>
+    </section>
+    <th:block th:insert="~{Dashboard/fragments/layout :: footer}"></th:block>
+</body>
+
+</html>

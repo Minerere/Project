@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Danh sách đặt hàng</title>
+    <th:block th:insert="~{Dashboard/fragments/layout :: head}"></th:block>
+</head>
+
+<body id="root">
+    <th:block th:insert="~{Dashboard/fragments/layout :: sidebar}"></th:block>
+    <section id="main">
+        <div id="content">
+            <div class="header">
+                <h1 class="mt-4">Danh sách đơn hàng</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item">Trang quản trị</li>
+                    <li class="breadcrumb-item active">Danh sách đơn hàng</li>
+                </ol>
+            </div>
+            <div class="container">
+                <div th:if="${error != null}" id="errorDiv" class="alert alert-danger mb-2">
+					<span th:text="${error}"></span>
+				</div>
+				<div th:if="${success != null}" id="errorDiv" class="alert alert-success mb-2">
+					<span th:text="${success}"></span>
+				</div>
+                <table class="table table-hover mt-4">
+                    <thead>
+                        <tr>
+                            <th scope="col">Mã</th>
+                            <th scope="col">Địa chỉ</th>
+                            <th scope="col">Số điện thoại</th>
+                            <th scope="col">Tổng thanh toán</th>
+                            <th scope="col">Khách hàng</th>
+                            <th scope="col">Trạng thái</th>
+                            <th scope="col">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="order : ${orders}">
+                            <td th:text="${order.id}" scope="col"></td>
+                            <td th:text="${order.deliveryAddress}" scope="col"></td>
+                            <td th:text="${order.tel}" scope="col"></td>
+                            <td th:text="${#numbers.formatDecimal(order.totalPaymentAmount + 50000, 0, 'POINT', 0, 'POINT') + ' ₫'}"
+                                scope="col"></td>
+                            <td th:text="${order.user.username}" scope="col"></td>
+                            <td th:text="${order.status}" scope="col"></td>
+                            <td scope="col">
+                                <a th:href="@{/dashboard/orders/detail/{id}(id=${order.id})}"
+                                    class="btn btn-sm btn-primary">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a th:href="@{/dashboard/orders/delete/{id}(id=${order.id})}" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <th:block th:insert="~{Dashboard/fragments/layout :: footer}"></th:block>
+</body>
+
+</html>

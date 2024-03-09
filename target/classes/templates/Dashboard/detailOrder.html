@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Chi tiết đơn hàng</title>
+	<th:block th:insert="~{Dashboard/fragments/layout :: head}"></th:block>
+</head>
+
+<body id="root">
+	<th:block th:insert="~{Dashboard/fragments/layout :: sidebar}"></th:block>
+	<section id="main" style="background-color: #fff">
+		<th:block th:insert="~{Dashboard/fragments/layout :: navbar}"></th:block>
+		<div id="content">
+			<div class="header">
+				<h1 class="">Chi tiết đơn hàng</h1>
+				<ol class="breadcrumb m-0">
+					<li class="breadcrumb-item">Trang quản trị</li>
+					<li class="breadcrumb-item">Đơn hàng</li>
+					<li class="breadcrumb-item active">Chi tiết đơn hàng</li>
+				</ol>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="card d-block">
+							<div class="card-header fs-6 text-black fw-light">Thông tin người nhận</div>
+							<div class="card-body">
+								<div class="mb-2 form-floating">
+									<input th:value="${order.user.username}" type="text" class="form-control"
+										readonly="readonly" style="background-color: #fff">
+									<label class="form-label">Tên khách hàng</label>
+								</div>
+								<div class="mb-2 form-floating">
+									<input th:value="${'(+84) ' + order.user.tel}" type="text" class="form-control"
+										readonly="readonly" style="background-color: #fff">
+									<label class="form-label">Số điện thoại</label>
+								</div>
+								<div class="mb-2 form-floating">
+									<input th:value="${order.user.deliveryAddress}" type="text" class="form-control"
+										readonly="readonly" style="background-color: #fff">
+									<label class="form-label">Địa chỉ nhận hàng</label>
+								</div>
+								<div class="mb-2 form-floating">
+									<input
+										th:value="${#numbers.formatDecimal(order.totalPaymentAmount + 50000, 0, 'POINT', 0, 'POINT') + ' ₫'}"
+										type="text" class="form-control" readonly="readonly"
+										style="background-color: #fff">
+									<label class="form-label">Tổng thanh toán</label>
+								</div>
+								<div class="mb-2 form-floating">
+									<input value="Thanh toán khi nhận hàng" type="text" class="form-control"
+										readonly="readonly" style="background-color: #fff">
+									<label class="form-label">Phương thức thanh toán</label>
+								</div>
+								<div class="mb-2 form-floating"><input
+										th:value="${#dates.format(order.createdAt, 'HH:mm dd/MM/yyyy')}" type="text"
+										class="form-control" readonly="readonly" style="background-color: #fff">
+									<label class="form-label">Ngày đặt hàng</label>
+								</div>
+								<div class="mb-2 form-floating">
+									<input th:value="${#dates.format(order.updatedAt, 'dd/MM/yyyy')}" type="text"
+										class="form-control" readonly="readonly" style="background-color: #fff">
+									<label class="form-label">Ngày giao hàng dự kiến</label>
+								</div>
+								<form th:action="@{/dashboard/orders/update-status}" th:object="${order}" method="post">
+									<input type="hidden" name="id" th:field="*{id}" />
+									<div class="mb-2 form-floating">
+										<select th:field="*{status}" class="form-control">
+											<option value="Đang giao hàng">Đang giao hàng</option>
+											<option value="Giao thành công">Đã giao</option>
+										</select>
+										<label class="form-label">Trạng thái đơn hàng</label>
+									</div>
+									<button type="submit" class="btn btn-primary mt-2">
+										<i class="fa-solid fa-pen-nib"></i>
+										<span>Cập nhật</span>
+									</button>
+								</form>
+							</div>
+						</div>
+					</div>
+					<style>
+						tr > td {
+							font-size: 14px !important;
+						}
+					</style>
+					<div class="col-md-6">
+						<div class="card">
+							<div class="card-header fs-6 fw-light">Chi tiết đơn hàng</div>
+							<div class="card-body">
+								<div class="table-responsive">
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th scope="col">Mã sản phẩm</th>
+												<th scope="col">Tên sản phẩm</th>
+												<th scope="col">Giá</th>
+												<th scope="col">Số lượng</th>
+												<th scope="col">Tổng tiền</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="item : ${order.orderDetails}">
+												<td th:text=${item.product.id}></td>
+												<td th:text=${item.product.name}></td>
+												<td
+													th:text="${#numbers.formatDecimal(item.product.promotionalPrice, 0, 'POINT', 0, 'POINT') + ' ₫'}">
+												</td>
+												<td th:text=${item.quantity}></td>
+												<td
+													th:text="${#numbers.formatDecimal(item.totalAmount, 0, 'COMMA', 0, 'POINT') + ' ₫'}">
+												</td>
+											</tr>
+											<tr style="background-color: rgb(255,254,251)">
+												<td colspan="4" style="text-align: center; font-size: 18px; color: #333">
+													Tổng tiền
+												</td>
+												<td th:text="${#numbers.formatDecimal(order.totalAmount, 0, 'COMMA', 0, 'POINT') + ' ₫'}"
+													style="font-size: 18px; color: #333">
+												</td>
+											</tr>
+											<tr style="background-color: rgb(255,254,251)">
+												<td colspan="4" style="text-align: center; font-size: 18px; color: #333">
+													Phí vận chuyển
+												</td>
+												<td th:text="${'50.000' + ' ₫'}" style="font-size: 18px; color: #333">
+												</td>
+											</tr>
+											<tr style="background-color: rgb(255,254,251)" th:if="${order.discountCode != null}">
+												<td colspan="4" style="text-align: center; font-size: 18px; color: #333">
+													Giảm giá
+												</td>
+												<td th:text="${#numbers.formatDecimal(order.discountCode.value, 0, 'COMMA', 0, 'POINT') + ' ₫'}" style="font-size: 18px; color: #333">
+												</td>
+											</tr>
+											<tr style="background-color: rgb(255,254,251)">
+												<td colspan="4" style="text-align: center; font-size: 18px; color: #333">
+													Tổng thanh toán<span
+														th:text="${'(' + order.orderDetails.size() + ' Product' + ')'}"></span>
+												</td>
+												<td th:text="${#numbers.formatDecimal(order.totalPaymentAmount + 50000, 0, 'COMMA', 0, 'POINT') + ' ₫'}"
+													style="font-size: 20px !important; color: red;font-weight: 600">
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</section>
+	<th:block th:insert="~{Dashboard/fragments/layout :: footer}"></th:block>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Đăng ký</title>
+    <th:block th:insert="~{User/fragments/layout :: head}"></th:block>
+    <link rel="stylesheet" href="User/css/login.css">
+</head>
+
+<body>
+    <th:block th:insert="~{User/fragments/layout :: headerTopLine}"></th:block>
+    <th:block th:insert="~{User/fragments/layout :: navbar}"></th:block>
+
+    <section class="login-form">
+        <div class="title">Đăng ký tham gia cùng chúng tôi</div>
+        <div class="container">
+            <form action="/register" method="post" id="registerForm">
+                <div class="text-form">
+                    <input type="email" name="email" id="email" class="form-input" placeholder=" " required>
+                    <label class="form-lable">Địa chỉ email</label>
+                </div>
+                <div class="text-form">
+                    <input type="password" name="password" id="password" class="form-input" placeholder=" " required>
+                    <label class="form-lable">Mật khẩu</label>
+                </div>
+                <div class="text-form">
+                    <input type="password" name="confirmPassword" id="confirmPassword" class="form-input"
+                        placeholder=" " required>
+                    <label class="form-lable">Xác nhận mật khẩu</label>
+                </div>
+                <div class="text-form">
+                    <input type="text" name="fullName" class="form-input" placeholder=" " required>
+                    <label class="form-lable">Tên đầy đủ</label>
+                </div>
+                <th:block th:if="${res != null && res.hasError}">
+                    <div class="text-form pt-0" th:text="${res.message}" style="color: red;"></div>
+                </th:block>
+                <div class="button-form">
+                    <button type="submit" class="btn btn-primary w-50">Đăng ký ngay</button>
+                    <a class="btn-link" href="/login">
+                        Bạn đã có tài khoản? Đăng nhập ngay
+                    </a>
+                </div>
+            </form>
+        </div>
+    </section>
+    <script>
+        const form = document.querySelector('#registerForm');
+        form.onsubmit = () => {
+            var password = document.getElementById('password').value;
+            var confirmPassword = document.getElementById('confirmPassword').value;
+            if (password!= confirmPassword) {
+                alert('Mật khẩu nhập lại không đúng');
+                return false;
+            }
+        }
+    </script>
+    <th:block th:insert="~{User/fragments/layout :: menuBottom}"></th:block>
+    <th:block th:insert="~{User/fragments/layout :: footer}"></th:block>
+</body>
+
+</html>

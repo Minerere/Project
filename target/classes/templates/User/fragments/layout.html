@@ -1,0 +1,213 @@
+<th:block th:fragment="head">
+    <meta charset="utf-8">
+	
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+	<link rel="stylesheet" href="/User/css/style.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.0.9/dist/css/splide.min.css">
+
+	<!-- JavaScript của Splide Carousel -->
+	<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.0.9/dist/js/splide.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<link rel="stylesheet" href="/User/css/style.css">
+</th:block>
+<th:block th:fragment="headerTopLine">
+    <div class="py-1 header-first">
+		<div class="no-gutters align-items-start align-items-center px-md-0">
+			<div class="d-flex justify-content-around">
+				<div class="d-flex align-items-center">
+					<i class="fas fa-phone-alt"></i>
+					<span class="text">&nbsp 0334 366 722</span>
+				</div>
+				<div class="d-flex align-items-center">
+					<i class="fas fa-envelope"></i>
+					<span class="text">&nbsp MasterBee@gmail.com</span>
+				</div>
+				<div class="d-flex align-items-center">
+					<i class="fa-solid fa-truck"></i>
+					<span class="text">&nbsp DELIVERY & RETURNS MUST TAKE 3-5 BUSINESS DAYS</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+<th:block th:fragment="navbar">
+	<nav class="navbar bg-success navbar-expand-lg navbar-dark bg-light menu-head" id="sticky-nav">
+		<div class="container">
+			<div class="logo-form">
+				<a href="/">
+					<img src="/User/image/logo/logo-M.png" alt="Logo MasterBee">
+				</a>
+			</div>
+			<div class="collapse navbar-collapse">
+				<ul class="navbar-nav menu row">
+					<li class="menu-item col">
+						<a onclick="location.href = '/products';">Cửa hàng</a>
+						<div class="sub-menu">
+							<div th:each="category : ${categories}" class="menu-group">
+								<a th:href="@{/products?c={category_id} (category_id=${category.id})}"
+									th:text="${category.name}"></a>
+								<ul>
+									<li th:each="product : ${category?.products}">
+										<a th:href="@{/products/detail/{id} (id=${product?.id})}"
+											th:text="${product?.name}"></a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</li>
+					<li href="" class="menu-item col">
+						<a id="linkToSupport" onclick="location.href='/'">Hỗ trợ</a>
+						<div class="sub-menu">
+							<div class="menu-group">
+								<a href="#">Hỗ trợ về sản phẩm</a>
+								<ul>
+									<li><a href="#">Bảo hành</a></li>
+									<li><a href="#">Sửa chữa</a></li>
+									<li><a href="#">Đổi mới</a></li>
+								</ul>
+							</div>
+							<div class="menu-group">
+								<a href="#">Liên hệ</a>
+								<ul>
+									<li><a href="#">Facebook</a></li>
+									<li><a href="#">Zalo</a></li>
+									<li><a href="#">Email</a></li>
+								</ul>
+							</div>
+						</div>
+					</li>
+					<li href="#" class="menu-item col" id="search-form">
+						<a>
+							<i class="fa-solid fa-magnifying-glass"></i>
+						</a>
+						<div class="sub-menu">
+							<form action="/products">
+								<div class="search-group">
+									<input type="text" name="s" placeholder="Tìm tên sản phẩm"></input>
+									<button class="search-button">
+										<i class="fa-solid fa-magnifying-glass"></i>
+									</button>
+								</div>
+							</form>
+						</div>
+					</li>
+					<li href="" class="menu-item col" th:if="${session.user != null}">
+						<a>
+							<i class="fa-solid fa-bag-shopping"></i>
+						</a>
+						<div class="sub-menu" id="order-form">
+							<div class="menu-group">
+								<span>Sản phẩm đã thêm</span>
+								<ul>
+									<li class="" th:each="cartItem : ${session.user?.cart?.cartItems}">
+										<img th:src="${cartItem.product.productImages.size() > 0 ? cartItem.product.productImages.get(0).url : ''}"
+											style=" width: 20px; height: 20px;">
+										<span th:text="${cartItem.product.name}" style=" font-size: 12px;"></span>
+									</li>
+
+									<li>
+										<a href="/cart">
+											<button class="btn btn-dark " style="width: 100%;">
+												<small>Xem giỏ hàng</small>
+												<i class="fa-solid fa-cart-shopping"></i>
+											</button>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</li>
+					<li href="" class=" col menu-item-acc">
+						<a>
+							<i class="fa-solid fa-user"></i>
+						</a>
+						<div class="sub-menu shadow shadow-lg" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;" id="account-form">
+							<div class="menu-group">
+								<ul>
+									<li class="" th:unless="${session.user != null}">
+										<a class="btn-sm btn bg-black text-white d-flex justify-content-center align-items-center rounded-5" href="/login">Đăng nhập</a>
+									</li>
+									<li class="" th:unless="${session.user != null}">
+										<a class="btn-sm btn bg-secondary bg-opacity-25 text-black d-flex justify-content-center align-items-center rounded-5" href="/register">Đăng ký tài khoản</a>
+									</li>
+									<li class="" th:if="${session.user != null}">
+										<a class="btn-sm btn bg-black text-white d-flex justify-content-center align-items-center rounded-5" href="/account/information">Tài khoản</a>
+									</li>
+									<li class="" th:if="${isAdmin}">
+										<a class="btn-sm btn bg-secondary bg-opacity-25 text-black d-flex justify-content-center align-items-center rounded-5" th:href="@{/dashboard/index}">Trang quản trị</a>
+									</li>
+									<li th:if="${session.user != null}">
+										<a class="btn-sm btn bg-danger text-white gap-2 d-flex justify-content-center align-items-center rounded-5" th:href="@{/logout}">
+											<span>Đăng xuất</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+</th:block>
+<th:block th:fragment="footer">
+	<footer>
+		<div class="ft-inf">
+			<h6>Contact</h6>
+			<a>&nbsp Phone: 0334 366 722</a>
+			<a>&nbsp Email: MasterBee@gmail.com</a>
+			<div class="icon-info">
+				<a href="#" class="icon"><i class="fa-brands fa-facebook fa-icon"></i></a>
+				<a href="#" class="icon"><i class="fa-brands fa-youtube fa-icon"></i></a>
+				<a href="#" class="icon"><i class="fa-brands fa-instagram fa-icon"></i></a>
+			</div>
+
+		</div>
+		<div class="ft-img">
+			<span><img src="/User/image/logo/logo-M.png"></span>
+			<a style="color: rgba(240, 248, 255, 0.385);">Copyright © 2023 Copyright belongs to MasterBee.</a>
+		</div>
+	</footer>
+</th:block>
+<th:block th:fragment="menuBottom">
+	<div class="support-box">
+		<a href="#">Feedback</a>
+	</div>
+	<section class="big-menu">
+		<div class="d-flex justify-content-around align-items-center">
+			<div class="sub-menu-item">
+				<span style="padding: 0">Sản phẩm - Dịch vụ</span>
+				<ul style="padding: 0">
+					<li><a href="#">Điện thoại thông minh</a></li>
+					<li><a href="#">Máy tính xách tay</a></li>
+					<li><a href="#">Máy tính để bàn</a></li>
+					<li><a href="#">Phụ kiện điện thoại - máy tính</a></li>
+				</ul>
+			</div>
+			<div class="sub-menu-item">
+				<span style="padding: 0;">Hỗ trợ</span>
+				<ul style="padding: 0">
+					<li><a href="#">Hỗ trợ tại nhà</a></li>
+					<li><a href="#">Hỗ trợ qua điện thoại</a></li>
+					<li><a href="#">Trung tâm bảo hành</a></li>
+					<li><a href="#">Phản hồi & Đánh giá</a></li>
+				</ul>
+			</div>
+		</div>
+	</section>
+</th:block>
+<th:block th:fragment=""></th:block>
+<th:block th:fragment=""></th:block>
+<th:block th:fragment=""></th:block>

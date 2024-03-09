@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Chi tiết sản phẩm</title>
+	<th:block th:insert="~{User/fragments/layout :: head}"></th:block>
+	<style>
+		#description {
+			width: 200px;
+			height: 50px;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+
+		#description.expanded {
+			height: auto;
+		}
+	</style>
+</head>
+
+<body>
+	<th:block th:insert="~{User/fragments/layout :: headerTopLine}"></th:block>
+	<th:block th:insert="~{User/fragments/layout :: navbar}"></th:block>
+
+	<div class="container my-4 bg-white p-4 rounded-4">
+		<div class="overlay"></div>
+		<div class="row">
+			<div class="col-6">
+				<div class="row">
+					<div class="container-fluid" style="width: 80%; padding-bottom: 50px;">
+						<div class="row">
+							<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+								<div class="carousel-inner mt-2" s
+									tyle="background-color: #fff; border-radius: 15px; padding: 20px;">
+									<div th:object="${product}">
+										<img style="width: 70%; height: 450px; object-fit: contain;"
+											class="d-block w-100 rounded-2"
+											th:src="*{productImages.size() > 0 ? productImages.get(0).url : ''}">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-6" th:object="${product}">
+				<h2>
+					<span class="fw-light" th:text="*{name}"></span>
+				</h2>
+				<small class="text-warning">
+					<i class="fa-solid fa-star star-color"></i>
+					<i class="fa-solid fa-star star-color"></i>
+					<i class="fa-solid fa-star star-color"></i>
+					<i class="fa-solid fa-star star-color"></i>
+					<i class="fa-solid fa-star star-color"></i>
+				</small>
+				<small class="text-primary fw-light">5 lượt đánh giá</small>
+				<h3 class="pt-2">
+					<div class="pricing">
+						<p class="price">
+							<span class="price-sale"
+								th:text="${#numbers.formatDecimal(product.promotionalPrice, 0, 'POINT', 0, 'POINT') + ' ₫'}"
+								style="color: red; font-size: 32px">
+							</span>
+							<delete class="price-dc"
+								th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT') + ' ₫'}"
+								style="font-size: 20px; text-decoration: line-through;">
+							</delete>
+						</p>
+					</div>
+				</h3>
+				<div class="pt-2">
+					<div class="card border-0 bg-white">
+						<div class="card-header">
+							<span style="color: #333; font-weight: 500; font-size: 16px">Chi tiết sản phẩm</span>
+						</div>
+						<div class="card-body" style="min-height: 235px;" id="description">
+							<pre style="white-space: pre-wrap;" th:text="${product.description}"></pre>
+						</div>
+						<p style="cursor: pointer;" id="see-more" class="text-center text-primary">Xem thêm</p>
+						<div class="card-footer bg-white">
+							<button class="btn btn-dark col-sm-12" id="add-to-cart" th:attr="data-id=${product.id}"
+								data-quantity="1">
+								<div class="flex-item">
+									<i class="fa-solid fa-cart-shopping"></i>
+									<span>Thêm vào giỏ hàng</span>
+								</div>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<th:block th:insert="~{User/fragments/layout :: menuBottom}"></th:block>
+	<th:block th:insert="~{User/fragments/layout :: footer}"></th:block>
+
+	<script th:src="@{/User/js/owl.carousel.min.js}"></script>
+	<script th:src="@{/User/js/script.js}"></script>
+	<!-- Thư viện Popper.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<!-- Thư viện Bootstrap JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<script>
+		const des = document.getElementById('description')
+		const seeMore = document.getElementById('see-more')
+
+		seeMore.addEventListener('click', () => {
+            if (des.classList.contains('expanded')) {
+                des.classList.remove('expanded')
+                seeMore.innerHTML = 'Xem thêm'
+            } else {
+                des.classList.add('expanded')
+                seeMore.innerHTML = 'Đóng'
+            }
+        })
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>Danh sách mã giảm giá</title>
+    <th:block th:insert="~{Dashboard/fragments/layout :: head}"></th:block>
+</head>
+
+<body id="root">
+	<th:block th:insert="~{Dashboard/fragments/layout :: sidebar}"></th:block>
+	<section id="main">
+		<th:block th:insert="~{Dashboard/fragments/layout :: navbar}"></th:block>
+		<div id="content">
+			<div class="header">
+                <h1 class="">Danh sách mã giảm giá</h1>
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item">Trang quản trị</li>
+                    <li class="breadcrumb-item">Mã giảm giá</li>
+                    <li class="breadcrumb-item active">Danh sách mã giảm giá</li>
+                </ol>
+            </div>
+			<div class="container">
+				<div th:if="${error != null}" id="errorDiv" class="alert alert-danger mb-2">
+					<span th:text="${error}"></span>
+				</div>
+				<div th:if="${success != null}" id="errorDiv" class="alert alert-success mb-2">
+					<span th:text="${success}"></span>
+				</div>
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">ID</th>
+								<th scope="col">Mã</th>
+								<th scope="col">Giá trị</th>
+								<th scope="col">Ngày bắt đầu hiệu lực</th>
+								<th scope="col">Ngày hết hạn</th>
+								<th scope="col">Thời gian tạo</th>
+								<th scope="col">Hành động</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- Dữ liệu sẽ được điền vào đây -->
+							<tr th:each="discountCode : ${discountCodes}">
+								<th scope="row" th:text="${discountCode.id}">1</th>
+								<td th:text="${discountCode.code}">Code1</td>
+								<td th:text="${discountCode.value}">Value1</td>
+								<td th:text="${discountCode.effectiveDate}">2023-01-01</td>
+								<td th:text="${discountCode.expirationDate}">2023-12-31</td>
+								<td th:text="${discountCode.createdAt}">2023-01-01 10:00:00</td>
+								<td>
+									<a th:href="@{/dashboard/updateDiscountCode/{id}(id=${discountCode.id})}"
+										class="btn btn-sm btn-success">
+										<i class="fas fa-pencil"></i>
+									</a>
+									<a th:href="@{discountCodeTable?id={id}&action=remove(id=${discountCode.id})}"
+										class="btn btn-sm btn-danger">
+										<i class="fas fa-trash"></i>
+									</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+    <th:block th:insert="~{Dashboard/fragments/layout :: footer}"></th:block>
+</body>
+
+</html>

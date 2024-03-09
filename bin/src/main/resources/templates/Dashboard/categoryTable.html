@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Danh sách thể loại</title>
+    <th:block th:insert="~{Dashboard/fragments/layout :: head}"></th:block>
+</head>
+
+<body id="root">
+    <th:block th:insert="~{Dashboard/fragments/layout :: sidebar}"></th:block>
+    <section id="main">
+        <th:block th:insert="~{Dashboard/fragments/layout :: navbar}"></th:block>
+        <div id="content">
+            <div class="header">
+                <h1 class="">Danh sách thể loại</h1>
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item">Trang quản trị</li>
+                    <li class="breadcrumb-item">Thể loại</li>
+                    <li class="breadcrumb-item active">Danh sách thể loại</li>
+                </ol>
+            </div>
+            <div class="container">
+                <div th:if="${error != null}" id="errorDiv" class="alert alert-danger mb-2">
+					<span th:text="${error}"></span>
+				</div>
+				<div th:if="${success != null}" id="errorDiv" class="alert alert-success mb-2">
+					<span th:text="${success}"></span>
+				</div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Tên loại</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="ProductCategory : ${cates}">
+                                <th th:text="${ProductCategory.id}"></th>
+                                <td th:text="${ProductCategory.name}"></td>
+                                <td>
+                                    <a th:href="@{categoryTable/{id}(id=${ProductCategory.id})}"
+                                        class="btn btn-sm btn-success">
+                                        <i class="fas fa-pencil"></i>
+                                    </a>
+                                    <a th:href="@{categoryTable/delete/{id}(id=${ProductCategory.id})}"
+                                        class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <th:block th:insert="~{Dashboard/fragments/layout :: footer}"></th:block>
+</body>
+
+</html>

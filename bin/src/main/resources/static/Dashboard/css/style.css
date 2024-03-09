@@ -1,0 +1,504 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+#root {
+    display: flex;
+    width: 100%;
+    min-height : 100vh;
+    font-family: 'Inter', 'sans-serif';
+    font-size: 14px;
+}
+
+#sidebar {
+    width: fit-content;
+    height: 100%;
+    min-width: 300px;
+    background: #000000;
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
+}
+
+.sidebar__container {
+    width: 100%;
+    border-radius: 12px;
+    color: #000000;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.sidebar__container > .profile {
+    width: 100%;
+    padding: 12px;
+    background: rgb(255, 255, 255);
+    border-radius: 0 16px 16px 0;
+    margin-bottom: 12px;
+    border-left: solid 4px #3e97ff;
+}
+
+.sidebar__container > .profile > .profile__body {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.sidebar__container > .profile > .profile__body > .avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50px;
+    border: solid 1px #3e97ff;
+    box-shadow: 0 0 4px 2px rgba(62, 151, 255, 0.25);
+}
+
+.sidebar__container > .profile > .profile__body > .avatar > img {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+}
+
+.sidebar__container > .profile > .profile__body > .body {
+    margin-left: 16px;
+    flex: 1;
+}
+
+.sidebar__container > .profile > .profile__body > .body > .information {
+    width: 100%;
+}
+
+.sidebar__container > .profile > .profile__body > .body > .information > .username {
+    font-weight: 700;
+    line-height: 24px;
+}
+
+.sidebar__container > .profile > .profile__body > .body > .information > .balance {
+    font-weight: 500;
+    line-height: 24px;
+}
+
+.sidebar__container > .profile > .profile__body > .body > .information > .link {
+    line-height: 24px;
+    width: 100%;
+    display: inline-block;
+}
+
+.sidebar__container > .profile > .profile__footer > .act-btns {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    column-gap: 12px;
+}
+.sidebar__container > .profile > .profile__footer > .act-btns > .btn {
+    padding: 8px 12px;
+    font-weight: 700;
+    text-align: center;
+
+    flex: 1;
+    border-radius: 50px;
+    transition: all 0.2s ease-in-out;
+}
+
+.sidebar__container > .profile > .profile__footer > .act-btns > .btn:hover {
+    scale: 1.025;
+}
+
+.sidebar__container > .profile > .profile__footer > .act-btns > .btn-topup {
+    background: #3e97ff;
+    box-shadow: 0 0 4px 2px rgba(62, 151, 255, 0.5);
+}
+
+.sidebar__container > .profile > .profile__footer > .act-btns > .btn-sign-out {
+    background: #000000;
+    color: #fff;
+    box-shadow: 0 0 4px 2px rgba(255, 255, 255, 0.5);
+}
+
+.sidebar__container > .composite-menu {
+    flex: 1;
+    width: 100%;
+    background: rgb(255, 255, 255);
+    padding: 12px;
+    border-radius: 16px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.sidebar__container > .composite-menu::-webkit-scrollbar {
+    display: none;
+}
+
+.sidebar__container > .composite-menu > .menu {
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+.sidebar__container > .composite-menu > .menu > .menu-title {
+    width: 100%;
+    padding-left: 12px;
+    padding-bottom: 12px;
+    color: #000000;
+    font-weight: 700;
+
+    font-size: 16px;
+    border-bottom: solid 1px #000000;
+}
+.sidebar__container > .composite-menu > .menu > .menu-items {
+    width: 100%;
+    padding: 8px 12px;
+}
+
+.sidebar__container > .composite-menu > .menu > .menu-items > li {
+    width: 100%;
+    display: block;
+    padding: 4px 0;
+}
+
+.sidebar__container > .composite-menu > .menu > .menu-items > li > a {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    color: #494949;
+    font-weight: 700;
+    transition: all 0.2s ease-in-out;
+}
+
+.sidebar__container > .composite-menu > .menu > .menu-items > li > a:hover, .sidebar__container > .composite-menu > .menu > .menu-items > li.active > a {
+    color: #fff;
+    background: rgb(0, 0, 0);
+    border-radius: 16px;
+}
+
+.sidebar__container > .composite-menu > .menu > .menu-items > li > a > .menu__icon {
+    display: block;
+    font-size: 24px;
+}
+
+.sidebar__container > .composite-menu > .menu > .menu-items > li > a > span {
+    display: block;
+    margin-left: 12px;
+}
+
+#main {
+    flex: 1;
+    background: #f0f0f0;
+    transition: all 0.2s ease-in-out;
+}
+
+#main #navbar {
+    width: 100%;
+    height: 64px;
+    background: #000000;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+#navbar > .navbar__logo {
+
+
+    flex-shrink: 0;
+}
+
+#navbar > .navbar__logo > img {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+#navbar > .navbar__container {
+    padding: 12px;
+    display: flex;
+    align-items: center;
+}
+
+#navbar > .navbar__container > .menu {
+    display: flex;
+    gap: 16px;
+}
+
+#navbar > .navbar__container > .menu > .modal {
+    position: relative;
+}
+
+#navbar > .navbar__container > .menu > .modal > .modal-button {
+    display: flex;
+    border: none;
+    font-size: 26px;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+#navbar > .navbar__container > .menu > .modal > .modal-content {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    display: block;
+    min-width: 120px;
+    min-height: 120px;
+    padding: 12px;
+    background: #fff;
+    border-radius: 12px;
+    scale: 0;
+    transition: all 0.2s ease-in-out;
+}
+
+#navbar > .navbar__container > .menu > .modal > .modal-button:hover {
+    background: rgba(255, 255, 255, 0.125);
+}
+
+#navbar > .navbar__container > .menu > .modal > .modal-button:hover ~ .modal-content {
+    scale: 1;
+}
+
+#toggleSidebar {
+    display: none;
+    background: #333;
+    color: white;
+    cursor: pointer;
+    border: none;
+    font-size: 26px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    z-index: 9999;
+}
+
+#toggleSidebar:hover {
+    background: rgba(255, 255, 255, 0.125);
+}
+
+@media screen and (max-width: 768px) {
+    #root {
+        display: block;
+    }
+
+    #sidebar {
+        position: absolute;
+        transform: translateX(-100%);
+        z-index: 9999;
+    }
+    #toggleSidebar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #sidebar.active {
+        transform: translateX(0%);
+    }
+}
+
+#main #content {
+    height: calc(100vh - 64px);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
+
+#content > .header {
+    font-size: 14px;
+    border-left: solid 4px #0050a8;
+    padding: 12px 12px;
+    background: #fff;
+    flex-shrink: 0;
+}
+
+#content > .header > h1 {
+    font-size: 18px !important;
+}
+
+#content > .body {
+    background: #fff;
+    border-radius: 16px;
+    padding: 12px;
+}
+
+.panel {
+    width: 100%;
+    background: #fff;
+    box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.125);
+    border-radius: 16px;
+}
+
+.panel > .panel-header {
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+    padding: 20px;
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.panel > .panel-header > span {
+    margin-left: 8px;
+}
+
+.panel > .panel-body {
+    padding: 0 20px;
+    width: 100%;
+}
+
+.panel .panel-section {
+    width: 100%;
+}
+
+.panel .panel-section:not(:last-child) {
+    padding-bottom: 20px;
+    border-bottom: solid 1px #ccc;
+}
+
+.panel > .panel-footer {
+    padding: 20px;
+    width: 100%;
+}
+
+.search-box {
+    width: 100%;
+    margin-bottom: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+}
+
+.row {
+    display: grid;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.row.cols-6 {
+    grid-template-columns: repeat(2, auto);
+    gap: 12px;
+}
+
+.row.cols-4 {
+    grid-template-columns: repeat(3, auto);
+    gap: 12px;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.input-group {
+    display: block;
+}
+
+.input-group > label {
+    padding: 4px 0px;
+    display: block;
+    font-weight: 400;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.input-group > input, .input-group > select {
+    width: 100%;
+    border: solid 2px #ccc;
+    transition: all 0.125s ease-in-out;
+    height: 36px;
+    padding: 0px 12px;
+    border-radius: 4px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.input-group > input:focus, .input-group > select:focus {
+    border: solid 2px #0050a8;
+}
+
+.search-box > input {
+    flex: 1;
+    height: 32px;
+    border: none;
+    border-bottom: solid 1px #ccc;
+    transition: all 0.125s ease-in-out;
+    padding: 0 8px;
+}
+
+.search-box > button {
+    height: 32px;
+    transition: all 0.125s ease-in-out;
+    padding: 0 8px;
+    background: #333;
+    color: #fff;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+}
+
+.search-box > button:hover {
+    outline: solid 1px #333;
+}
+
+.search-box > input:focus, .search-box > input:hover, .search-box > input:not(:placeholder-shown) {
+    border-bottom: solid 2px #333;
+    background: #eee;
+}
+
+.overflow {
+    width: 100%;
+    overflow: auto;
+}
+
+.container {
+    background-color: #fff;
+    padding-block: 12px;
+    border-radius: 12px;
+}
+
+.table tr {
+    height: 60px;
+    vertical-align: middle;
+}
+
+.table tr th {
+    text-wrap: nowrap;
+}
+/* .table {
+    width: auto;
+    min-width: 100%;
+    border-collapse: collapse;
+    border-radius: 4px;
+    box-shadow: 0 0 1px 1px #333;
+    overflow: hidden;
+}
+
+.table > thead {
+    text-align: left;
+    border-bottom: 1px solid;
+    color: #fff;
+    background: #333;
+}
+
+.table > thead > tr > th {
+    padding: 16px 12px;
+}
+
+.table > tbody {
+    background: #fff; 
+}
+
+.table > tbody > tr > td {
+    padding: 12px;
+}
+
+.table > tbody > tr:not(:last-child) > td {
+    border-bottom: 1px solid #ddd;
+} */
+.ck-editor__editable {
+    min-height: 400px;
+}

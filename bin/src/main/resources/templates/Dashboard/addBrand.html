@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>Thêm/Sửa thương hiệu</title>
+	<th:block th:insert="~{Dashboard/fragments/layout :: head}"></th:block>
+</head>
+
+<body id="root">
+	<th:block th:insert="~{Dashboard/fragments/layout :: sidebar}"></th:block>
+	<section id="main">
+		<th:block th:insert="~{Dashboard/fragments/layout :: navbar}"></th:block>
+		<div id="content">
+			<div class="header">
+				<h1 class="">Thêm/Sửa thương hiệu</h1>
+				<ol class="breadcrumb m-0">
+					<li class="breadcrumb-item">Trang quản trị</li>
+					<li class="breadcrumb-item">Thương hiệu</li>
+					<li class="breadcrumb-item active">Thêm/Sửa thương hiệu</li>
+				</ol>
+			</div>
+			<div class="container">
+				<form action="/dashboard/addBrand/save-or-update" method="post" th:object="${brandS}" id="form">
+					<div class="row">
+						<div>
+							<input name="id" th:field="*{id}" hidden>
+							<input hidden th:field="*{photo}" type="file" name="photo" class="form-control" id="photo">
+						</div>
+						<div class="col-12 mb-2">
+							<div class="form-floating">
+								<input th:field="*{name}" type="text" name="name" class="form-control" placeholder=" "
+									id="name" required>
+								<label for="name" class="form-label">Tên thương hiệu</label>
+							</div>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary">Lưu</button>
+				</form>
+				<div th:if="${error != null}" id="errorDiv" class="alert alert-danger mt-2">
+					<span th:text="${error}"></span>
+				</div>
+			</div>
+		</div>
+	</section>
+	<th:block th:insert="~{Dashboard/fragments/layout :: footer}"></th:block>
+</body>
+
+</html>

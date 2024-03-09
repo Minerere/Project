@@ -1,0 +1,156 @@
+body{
+    background-color: rgb(237, 237, 237);
+}
+header{
+    position: relative;
+    width: 100%;
+    height: 70px;
+    background-color:  rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+
+}   
+
+.head-top .text-hd{
+    color: #000;
+    max-width: 200px;
+
+}
+.head-top .text-hd{
+    color: rgb(0, 0, 0);
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: large;
+    display: block;
+    padding-top: 10px;
+}
+.head-top .fa-user{
+    display: none;
+    color: #000000;
+    max-width: fit-content;
+    margin-right: 20px;
+    bottom: 50%;
+}
+ @media screen and (max-width: 767px){
+    
+    .head-top .text-hd{
+        display: none;
+    }
+    .head-top .fa-user{
+        display: block;  
+        
+    }
+ }
+
+ .lg-text{
+    color: #000000;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+ }
+
+ .login-form{
+    display: flex;
+    background-color: rgb(255, 255, 255);
+    margin: auto;
+    width: 60%;
+    height: auto;
+    border-radius: 30px;
+ }
+ 
+.login-form .text-form{
+    
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    display: flex;
+    position: relative;
+    top: 10%;
+    padding: 25px;
+    margin-bottom: 15px;
+}
+ .text-form input{  
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: #000000;
+    border-bottom: 1px solid #000000;
+    width: 70%;
+    border-radius: 0;
+    padding-bottom: 10px;
+    font-size: x-large;
+    
+ }
+
+ .text-form input:focus{
+    border-color: #6a5af9;
+ }
+
+
+
+ .text-form .form-lable{
+    position: absolute;
+    color: #0000004e;
+    font-size: large;
+    left: 18%;
+    user-select: none;
+   transition: 0.25s ease;
+ }
+ .text-form input:not(:placeholder-shown) + .form-lable,
+ .text-form input:focus + .form-lable{
+    top: 0;
+    font-size: small;
+    left: 17%;
+    color: #6a5af9;
+ }
+
+
+
+.button-form{
+    width: 100%;
+    text-align: center;
+    margin: 40px auto;
+    padding-top: 10px;
+}
+
+.button-form button{
+    width: 50%;
+    border-radius: 20px;
+    padding: 10px;
+}
+.button-form a{
+    display: block;
+    margin: 40px auto;
+}
+
+footer{
+    margin-top: 50px;
+    display: flex;
+}
+
+footer .ft-inf{
+    width: 60%;
+    height: 100%;
+    padding-bottom: 10px;
+    padding-left: 10%;
+    color: #000000b6;
+
+}
+
+footer .ft-inf a{
+    font-size: smaller;
+}
+
+footer .ft-img{
+    width: 40%;
+    text-align: center;
+}
+footer .ft-img a{
+    display: block;
+    font-size: smaller;
+    padding-top: 5px;
+}
+
+

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Giỏ hàng</title>
+	<th:block th:insert="~{User/fragments/layout :: head}"></th:block>
+	<style>
+		/* Ẩn mũi tên lên/xuống trong input type="number" */
+		input[type="number"]::-webkit-inner-spin-button,
+		input[type="number"]::-webkit-outer-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+	</style>
+</head>
+
+<body>
+	<th:block th:insert="~{User/fragments/layout :: headerTopLine}"></th:block>
+	<th:block th:insert="~{User/fragments/layout :: navbar}"></th:block>
+	<!-- <img th:src="${cartItems.product.productImages.size() > 0 ? cartItems.product.productImages?.get(0)?.url : ''}" height="50px" width="50px"> -->
+	<main>
+		<div class="container my-2">
+			<div class="row">
+				<div class="col-md-8">
+					<div class="card border-0 bg-white mb-2">
+						<div class="card-header bg-white py-2 px-4 d-flex flex-column gap-0">
+							<nav aria-label="breadcrumb">
+								<ol class="breadcrumb py-0 m-0" style="font-size: 14px;">
+									<li class="breadcrumb-item py-0 px-0" aria-current="page">
+										<a href="/">Trang chủ</a>
+									</li>
+									<li class="breadcrumb-item active" aria-current="page">Giỏ hàng</li>
+								</ol>
+							</nav>
+							<div class="d-flex justify-content-between align-items-center">
+								<div>
+									<p class="m-0 p-0 fw-semibold">Giỏ hàng của tôi</p>
+									<p style="font-size: 12px;" class="fw-semibold m-0">
+										Bạn có 
+										<span th:if="${session.user?.cart != null}" th:text="${session.user?.cart?.cartItems.size()}"></span>
+										<span th:unless="${session.user?.cart != null}" >0</span>
+										sản phẩm trong giỏ
+									</p>
+								</div>
+								<button class="btn btn-sm btn-outline-danger border-1 border-danger rounded-5 px-4" id="clear-cart-all">Xóa tất cả</button>
+							</div>
+						</div>
+						<div class="card-body px-4 user-select-none">
+							<div th:each="cartItem : ${session.user?.cart?.cartItems}"
+								class="p-2 border border-1 rounded-4 border-opacity-25 border-secondary shadow shadow-sm">
+								<div class="d-flex gap-3 flex-wrap align-items-center justify-content-between">
+									<img class="rounded-2"
+										th:src="${cartItem.product.productImages.size() > 0 ? cartItem.product.productImages?.get(0)?.url : ''}"
+										height="64px" width="64px">
+									<div class="d-flex flex-column">
+										<p style="font-size: 16px;" class="m-0 fw-semibold text-black"
+											th:text="${cartItem.product.name}"></p>
+										<span style="font-size: 12px;">Không có ghi chú nào</span>
+									</div>
+									<div class="d-flex flex-column">
+										<span class="" style="font-size: 12px;">Giá mỗi sản phẩm</span>
+										<p class="fs-5 m-0"
+											th:text="${#numbers.formatDecimal(cartItem.product.promotionalPrice, 0, 'POINT', 0, 'POINT')  + ' ₫'}">
+										</p>
+									</div>
+									<div class="d-flex flex-row align-items-center gap-2">
+										<span style="font-size: 12px;">Số lượng</span>
+										<div class="d-flex">
+											<button class="btn btn-sm btn-link btn-light rounded-0" name="decrease"
+												th:onclick="'decrease('+${cartItem.id}+')'">
+												<i class="fas fa-minus"></i>
+											</button>
+											<input type="number" style="width: 50px;" th:value="${cartItem.quantity}"
+												step="1" min="1" th:max="${cartItem.product.quantity}" readonly
+												class="border-0 form-control shadow-none text-center" name="quantity"
+												th:attr="data-id=${cartItem.product.id}"
+												th:data-item-id="${cartItem.id}">
+											<button class="btn btn-sm btn-link btn-light rounded-0" name="increase"
+												th:onclick="'increase('+${cartItem.id}+')'">
+												<i class="fas fa-plus"></i>
+											</button>
+										</div>
+									</div>
+									<div class="d-flex flex-column justify-content-center">
+										<span style="font-size: 12px;">Thành tiền</span>
+										<p class="fs-3 m-0" name="totalPrice" th:data-item-id="${cartItem.id}"
+											th:price-per-one="${cartItem.product.promotionalPrice}"
+											th:text="${#numbers.formatDecimal(cartItem.totalAmount, 0, 'POINT', 0, 'POINT') + ' ₫'}">
+										</p>
+									</div>
+									<a th:href="@{cart/delete/{id} (id=${cartItem.id})}"
+										class="m-0 btn btn-outline-danger border-1 shadow shadow-sm rounded-5" style="transform: translateX(24px);">
+										<i class="fs-6 fas fa-trash"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="mx-auto w-75 card border-0 bg-white">
+						<div class="card-header bg-white px-3 fs-5 fw-light">Đặt hàng</div>
+						<div class="card-body">
+							<div class="d-flex gap-4 justify-content-center">
+								<div class="d-flex gap-2">
+									<small>Tổng tiền</small>
+									<p id="total" class="fs-4"
+										th:text="${#numbers.formatDecimal(session.user.cart == null ? 0 : session.user.cart.totalAmount, 0, 'POINT', 0, 'POINT') + ' ₫'}">
+									</p>
+								</div>
+								<div class="d-flex gap-2">
+									<small>Phí vận chuyển</small>
+									<p id="total" class="fs-4"
+										th:text="${'50.000'  + ' ₫'}">
+									</p>
+								</div>
+							</div>
+							<div class="d-flex flex-column gap-2 align-items-center">
+								<div class="d-flex flex-column d-none" id="appliedDiscount">
+									<small>Giảm giá</small>
+									<p id="discountAmount" class="fs-4 text-danger"></p>
+								</div>
+								<div class="d-flex flex-column">
+									<small class="p-0 m-0 fw-semibold">Tổng thanh toán</small>
+									<p id="totalPayment" class="fs-4"
+										th:text="${#numbers.formatDecimal(session.user.cart == null ? 0 : session.user.cart.totalAmount + 50000, 0, 'POINT', 0, 'POINT') + ' ₫'}">
+									</p>
+								</div>
+							</div>
+							<div class="input-group">
+								<input type="text" class="form-control" id="discountCode"
+									placeholder="Nhập mã giảm giá">
+								<button class="btn btn-outline-secondary" type="button" onclick="applyDiscountCode()">Áp
+									dụng</button>
+							</div>
+						</div>
+						<div class="card-footer p-0">
+							<button type="button" class="btn btn-dark rounded-0 rounded-bottom-2 w-100" id="order">Đặt hàng</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="card border-0">
+						<div class="card-header py-2 px-3 border-bottom border-1 bg-white text-black fw-light"
+							style="font-size: 20px;">Thông tin đặt hàng</div>
+						<div class="card-body py-2 px-2">
+							<div class="form-floating mb-2">
+								<input placeholder="name" class="form-control" id="username"
+									th:value="${session.user.username}" readonly required></input>
+								<label for="username">Họ tên</label>
+							</div>
+							<div class="form-floating mb-2">
+								<input class="form-control" placeholder="address" id="address"
+									th:value="${session.user.deliveryAddress}" readonly required>
+								</input>
+								<label for="address">Địa chỉ giao hàng</label>
+							</div>
+							<div class="form-floating mb-2">
+								<input class="form-control" placeholder="Phone number" id="tel"
+									th:value="${session.user.tel}" readonly required> </input>
+								<label for="tel">Số điện thoại</label>
+							</div>
+							<div class="form-floating mb-2">
+								<input class="form-control" placeholder="Email" id="email"
+									th:value="${session.user.email}" readonly required></input>
+								<label for="email">Địa chỉ email</label>
+							</div>
+						</div>
+						<div class="card-footer bg-white">
+							<div class="d-flex align-items-center gap-1">
+								<input class="form-check-input" type="checkbox" id="check1" name="option1"
+									value="something" checked>
+								<label class="form-check-label text-dark"><small>Tôi đã xác nhận rằng thông tin giao
+										hàng là chính xác</small></label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<th:block th:insert="~{User/fragments/layout :: menuBottom}"></th:block>
+	<th:block th:insert="~{User/fragments/layout :: footer}"></th:block>
+	<script src="/User/js/script.js"></script>
+	<script>
+		/* @extend */
+		const decreaseButtons = document.getElementsByName('decrease')
+		const increaseButtons = document.getElementsByName('increase')
+		function disabledButton() {
+			decreaseButtons.forEach(element => {element.disabled = true
+			console.log(element)
+			});
+			increaseButtons.forEach(element => {element.disabled = true
+            console.log(element)
+            });
+		}
+
+		function enabledButton() {
+			decreaseButtons.forEach(element => element.disabled = false)
+			increaseButtons.forEach(element => element.disabled = false);
+		}
+		function decrease(id) {
+			disabledButton()
+			let input = document.querySelector('input[data-item-id="' + id + '"]')
+			input.stepDown();
+			input.dispatchEvent(new Event('change'))
+			let totalP = document.querySelector('p[name="totalPrice"][data-item-id="' + id + '"]')
+			let price = totalP.getAttribute('price-per-one')
+			let totalPrice = price * input.value
+			totalP.textContent = totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+			setTimeout( enabledButton, 500)
+		}
+		function increase(id) {
+			disabledButton()
+			let input = document.querySelector('input[data-item-id="' + id + '"]')
+			input.stepUp();
+			input.dispatchEvent(new Event('change'))
+			let totalP = document.querySelector('p[name="totalPrice"][data-item-id="' + id + '"]')
+			let price = totalP.getAttribute('price-per-one')
+			let totalPrice = price * input.value
+			totalP.textContent = totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+			setTimeout( enabledButton, 500)
+		}
+
+	</script>
+	<script>
+		/* @HoaiDuc */
+		$('[name="quantity"]').change((e) => {
+			let input = e.target
+			let id = input.getAttribute('data-id')
+			let quantity = input.value
+			$.ajax({
+				url: "/api/cart",
+				dataType: "json",
+				method: "PUT",
+				data: {
+					product: id,
+					quantity: quantity
+				},
+				success: (rs) => {
+					$('#total').html(rs.totalAmount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND', minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+					$('#totalPayment').html((rs.totalAmount + 50000).toLocaleString('vi-VN', { style: 'currency', currency: 'VND', minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+					console.log("Cập nhập giỏ hàng thành công!");
+				},
+				error: (rs) => {
+					if (rs.status == 401) {
+						Swal.fire({
+							title: 'Warning!',
+							text: 'Vui lòng đăng nhập trước khi cập nhập sản phẩm trong giỏ hàng!',
+							showConfirmButton: false,
+							timer: 2000
+						});
+						document.location.href = "/login";
+					} else
+						console.log(rs);
+				}
+			});
+		});
+	</script>
+</body>
+
+</html>

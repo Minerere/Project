@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tài khoản của tôi</title>
+    <th:block th:insert="~{User/fragments/layout :: head}"></th:block>
+    <!-- <link rel="stylesheet" href="/User/css/account.css"> -->
+</head>
+
+<body>
+    <th:block th:insert="~{User/fragments/layout :: headerTopLine}"></th:block>
+    <th:block th:insert="~{User/fragments/layout :: navbar}"></th:block>
+
+    <main class="container mt-4 mb-4">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card border-0">
+                    <div class="card-header px-4 py-2 border-bottom border-1">
+                        <div
+                            class="d-flex align-items-center gap-2 flex-wrap justify-content-lg-start justify-content-md-center">
+                            <img width="75px" height="75px" class="d-block rounded-circle border-1 border border-dark"
+                                th:src="${session.user.image != null ? session.user.image : 'https://blog.nscsports.org/wp-content/uploads/2014/10/default-img.gif'}"
+                                alt="">
+                            <div class="d-flex flex-column gap-1">
+                                <p class="mb-0" th:text="${session.user.username}"></p>
+                                <small th:text="${session.user.email}"></small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="list-group list-group-flush"
+                            style="font-size: 14px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">
+                            <a href="/account/information" class="list-group-item list-group-item-action active">Thông tin cá
+                                nhân</a>
+                            <a href="/account/change-password" class="list-group-item list-group-item-action">Đổi
+                                mật khẩu</a>
+                            <a href="/account/my-orders" class="list-group-item list-group-item-action">Lịch sử đơn
+                                hàng</a>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/logout" style="font-size: 14px" class="text-danger text-decoration-none">Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="card border-0">
+                    <div class="card-header px-4 py-2 border-bottom border-1">
+                        <p class="fs-4 mb-0">Thông tin cá nhân</p>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item px-0">
+                                    <a href="/account/information" class="text-decoration-none">Tài khoản của tôi</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">Thông tin cá nhân</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="card-body">
+                        <div th:if="${error != null}" class="alert alert-danger">
+                            <span th:text="${error}"></span>
+                        </div>
+                        <div th:if="${success != null}" class="alert alert-success">
+                            <span th:text="${success}"></span>
+                        </div>
+                        <form action="/account/information" th:object="${user}" method="post"
+                            enctype="multipart/form-data">
+                            <input type="number" th:field="*{id}" hidden readonly>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div style="font-size: 12px; font-weight: 500;" class="mb-4">
+                                        <label for="image">Cập nhật ảnh đại diện</label>
+                                        <input style="font-size: 12px;" type="file" th:field="*{image}"
+                                            accept=".png, .jpg" class="form-control">
+                                    </div>
+                                    <div class="mb-2">
+                                        <img width="200px" height="200px" class="rounded-circle d-block m-auto border-1 border border-dark" id="preview"
+                                        th:src="${(user.image != null ? user.image : 'https://blog.nscsports.org/wp-content/uploads/2014/10/default-img.gif')}"
+                                        alt="">
+                                    </div>
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="row">
+                                        <div class="col-md-12 mb-2">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" th:field="*{email}" readonly
+                                                    placeholder=" " required>
+                                                <label for="username">Địa chỉ email</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" th:field="*{username}"
+                                                    placeholder=" " required>
+                                                <label for="username">Họ tên</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" th:field="*{tel}"
+                                                    placeholder=" " required>
+                                                <label for="username">Số điện thoại</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-2">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" th:field="*{deliveryAddress}"
+                                                    placeholder=" " required>
+                                                <label for="username">Địa chỉ giao hàng</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-5 d-flex gap-2">
+                                        <a href="/account/information" class="btn btn-secondary w-100" style="font-size: 14px;">Hủy bỏ</a>
+                                        <button type="submit" class="btn btn-primary w-100" style="font-size: 14px;">Cập nhật thông tin</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <th:block th:insert="~{User/fragments/layout :: menuBottom}"></th:block>
+    <th:block th:insert="~{User/fragments/layout :: footer}"></th:block>
+
+    <script>
+        var input = document.getElementById('image');
+        var preview = document.getElementById('preview');
+        input.onchange = (evt) => {
+            //console.log(evt.target.files[0]);
+                if (input.files.length > 0) {
+                    console.log(input.files[0])
+                        preview.src = URL.createObjectURL(input.files[0])
+                } else {
+                    preview.src = ""; // Clear preview if no file is selected
+                }
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tài khoản của tôi</title>
+    <th:block th:insert="~{User/fragments/layout :: head}"></th:block>
+    <!-- <link rel="stylesheet" href="/User/css/account.css"> -->
+</head>
+
+<body>
+    <th:block th:insert="~{User/fragments/layout :: headerTopLine}"></th:block>
+    <th:block th:insert="~{User/fragments/layout :: navbar}"></th:block>
+
+    <main class="container mt-4 mb-4">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card border-0">
+                    <div class="card-header px-4 py-2 border-bottom border-1">
+                        <div
+                            class="d-flex align-items-center gap-2 flex-wrap justify-content-lg-start justify-content-md-center">
+                            <img width="75px" height="75px" class="d-block rounded-circle border-1 border border-dark"
+                                th:src="${session.user.image != null ? session.user.image : 'https://blog.nscsports.org/wp-content/uploads/2014/10/default-img.gif'}"
+                                alt="">
+                            <div class="d-flex flex-column gap-1">
+                                <p class="mb-0" th:text="${session.user.username}"></p>
+                                <small th:text="${session.user.email}"></small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="list-group list-group-flush"
+                            style="font-size: 14px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">
+                            <a href="/account/information" class="list-group-item list-group-item-action ">Thông tin cá
+                                nhân</a>
+                            <a href="/account/change-password" class="list-group-item list-group-item-action">Đổi
+                                mật khẩu</a>
+                            <a href="/account/my-orders" class="list-group-item list-group-item-action active">Lịch sử
+                                đơn
+                                hàng</a>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/logout" style="font-size: 14px" class="text-danger text-decoration-none">Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="card border-0">
+                    <div class="card-header px-4 py-2 border-bottom border-1">
+                        <p class="fs-4 mb-0">Lịch sử đơn hàng</p>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item px-0">
+                                    <a href="/account/information" class="text-decoration-none">Tài khoản của tôi</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">Lịch sử đơn hàng</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="card-body">
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            <div th:each="order : ${user.orders}" class="accordion-item">
+                                <div class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        th:data-bs-target="${'#flush-collapse' + order.id}" aria-expanded="false"
+                                        aria-controls="flush-collapseOne">
+                                        <div class="w-100">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="d-flex gap-1 flex-column">
+                                                    <small>
+                                                        <span style="font-size: 12px;">Mã đơn hàng</span>
+                                                        <span class="text-danger" style="font-weight: bold;" th:text="${'#' + order.id}">#01</span>
+                                                    </small>
+                                                    <small>
+                                                        <span style="font-size: 12px;">Số điện thoại nhận hàng:</span>
+                                                        <span class="text-primary"
+                                                            style="font-weight: bold;" th:text="${order.tel}">03923812841</span>
+                                                    </small>
+                                                    <small>
+                                                        <span style="font-size: 12px;">Người nhận:</span>
+                                                        <span style="font-weight: bold;" th:text="${order.user.username}">Lý Ngọc Sang</span>
+                                                    </small>
+                                                </div>
+                                                <div class="d-flex gap-1 flex-column pe-4">
+                                                    <small style="font-size: 14px;">
+                                                        <span class="badge bg-secondary" th:text="${order.status}">Đang giao hàng</span>
+                                                    </small>
+                                                    <small>
+                                                        <span style="font-size: 12px;">Thanh toán:</span>
+                                                        <span style="font-size: 16px; font-weight: bold;" class="text-danger" th:text="${#numbers.formatDecimal(order.totalPaymentAmount + 50000, 0, 'POINT', 0, 'POINT') + ' ₫'}"></span>
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                                <div th:id="${'flush-collapse' + order.id}" class="accordion-collapse collapse"
+                                    data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body border border-top-0 border-1">
+                                        <table class="table">
+                                            <thead style="font-size: 14px;">
+                                                <tr>
+                                                    <th scope="col"></th>
+                                                    <th scope="col" class="fw-bold">Tên sản phẩm</th>
+                                                    <th scope="col" class="fw-bold">Giá</th>
+                                                    <th scope="col" class="fw-bold">Số lượng</th>
+                                                    <th scope="col" class="fw-bold">Tổng tiền</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="orderDetail : ${order.orderDetails}" style="vertical-align: middle; font-size: 14px;">
+                                                    <td>
+                                                        <img th:src="${orderDetail.product.productImages.size() > 0 ? orderDetail.product.productImages.get(0).url : ''}"
+                                                            style="width: 50px; height: 50px">
+                                                    </td>
+                                                    <td>
+                                                        <a th:href="@{/products/detail/{id} (id=${orderDetail.product.id})}">
+                                                            <span th:text="${orderDetail.product.name}"></span>
+                                                        </a>
+                                                    </td>
+                                                    <td
+                                                        th:text="${#numbers.formatDecimal(orderDetail.product.promotionalPrice, 0, 'POINT', 0, 'POINT') + ' ₫'}">
+                                                    </td>
+                                                    <td th:text=${orderDetail.quantity}></td>
+                                                    <td
+                                                        th:text="${#numbers.formatDecimal(orderDetail.totalAmount, 0, 'POINT', 0, 'POINT') + ' ₫'}">
+                                                    </td>
+                                                </tr>
+                                                <tr style="background-color: rgb(255, 254, 251)">
+                                                    <td colspan="4" style="text-align: center; font-size: 14px; color: #333">
+                                                        Tổng tiền</td>
+                                                    <td th:text="${#numbers.formatDecimal(order.totalAmount, 0, 'POINT', 0, 'POINT') + ' ₫'}"
+                                                        style="font-size: 14px; color: #333"></td>
+                                                </tr>
+                                                <tr th:if="${order.discountCode != null}" style="background-color: rgb(255, 254, 251)">
+                                                    <td colspan="4" style="text-align: center; font-size: 14px; color: #333">
+                                                        Giảm giá</td>
+                                                    <td th:text="${#numbers.formatDecimal(order?.discountCode?.value, 0, 'COMMA', 0, 'POINT') + ' ₫'}"
+                                                        style="font-size: 14px; color: #333"></td>
+                                                </tr>
+                                                <tr style="background-color: rgb(255, 254, 251)">
+                                                    <td colspan="4" style="text-align: center; font-size: 14px; color: #333">
+                                                        Chi phí vận chuyển</td>
+                                                    <td th:text="${'50.000' + ' ₫'}" style="font-size: 14px; color: #333"></td>
+                                                </tr>
+                                                <tr style="background-color: rgb(255, 254, 251)">
+                                                    <td colspan="4" style="text-align: center; font-size: 14px; color: #333">
+                                                        Tổng thanh toán
+                                                        <span th:text="${'(' + order.orderDetails.size() + ' sản phẩm' + ')'}"></span>
+                                                    </td>
+                                                    <td th:text="${#numbers.formatDecimal(order.totalPaymentAmount + 50000, 0, 'POINT', 0, 'POINT') + ' ₫'}"
+                                                        style="font-size: 16px; color: red; font-weight: 600">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <th:block th:insert="~{User/fragments/layout :: menuBottom}"></th:block>
+    <th:block th:insert="~{User/fragments/layout :: footer}"></th:block>
+
+</body>
+
+</html>

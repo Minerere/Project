@@ -1,0 +1,47 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+ul, li {
+    list-style: none;
+}
+
+button, input, select {
+    outline: none;
+    font-family: inherit;
+}
+
+a {
+    text-decoration: none !important;
+    color: inherit;
+    font-family: inherit;
+}
+
+.link {
+    color: #3e97ff;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+.link:hover {
+    color: #0050a8;
+}
+
+.flash {
+    animation: flash 0.75s infinite;
+}
+
+.flash:hover {
+    animation: none;
+}
+
+@keyframes flash {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

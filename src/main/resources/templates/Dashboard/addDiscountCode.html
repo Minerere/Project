@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Thêm mã giảm giá</title>
+    <th:block th:insert="~{Dashboard/fragments/layout :: head}"></th:block>
+</head>
+
+<body id="root">
+    <section id="sidebar" class="">
+        <th:block th:insert="~{Dashboard/fragments/layout :: sidebar}"></th:block>
+    </section>
+    <section id="main">
+        <th:block th:insert="~{Dashboard/fragments/layout :: navbar}"></th:block>
+        <div id="content">
+            <div class="header">
+                <h1 class="">Thêm mã giảm giá</h1>
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item">Trang quản trị</li>
+                    <li class="breadcrumb-item">Mã giảm giá</li>
+                    <li class="breadcrumb-item active">Thêm mã giảm giá</li>
+                </ol>
+            </div>
+            <div class="container">
+                <form action="/dashboard/discountCode/onAdd" method="post">
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <div class="form-floating">
+                                <input type="text" id="code" name="code" class="form-control" placeholder=" " required>
+                                <label for="code" class="form-label">Mã</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-2 ">
+                            <div class="form-floating">
+                                <input type="number" name="value" id="value" class="form-control" placeholder=" " required>
+                                <label for="value" class="form-label">Giá trị</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-2 ">
+                            <div class="form-floating">
+                                <input type="date" pattern="yyyy-MM-dd" id="effectiveDate" name="effectiveDate"
+                                    class="form-control" required>
+                                <label for="effectiveDate" class="form-label">Ngày bắt đầu hiệu lực</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-2 ">
+                            <div class="form-floating">
+                                <input type="date" pattern="yyyy-MM-dd" id="expirationDate" name="expirationDate"
+                                    class="form-control" required>
+                                <label for="expirationDate" class="form-label">Ngày hết hạn</label>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                </form>
+                <div th:if="${error != null}" id="errorDiv" class="alert alert-danger mt-2">
+                    <span th:text="${error}"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <th:block th:insert="~{Dashboard/fragments/layout :: footer}"></th:block>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>Danh sách sản phẩm</title>
+	<th:block th:insert="~{Dashboard/fragments/layout :: head}"></th:block>
+</head>
+
+<body id="root">
+	<th:block th:insert="~{Dashboard/fragments/layout :: sidebar}"></th:block>
+	<section id="main">
+		<th:block th:insert="~{Dashboard/fragments/layout :: navbar}"></th:block>
+		<div id="content">
+			<div class="header">
+				<h1 class="">Danh sách sản phẩm</h1>
+				<ol class="breadcrumb m-0">
+					<li class="breadcrumb-item">Trang quản trị</li>
+					<li class="breadcrumb-item">Sản phẩm</li>
+					<li class="breadcrumb-item active">Danh sách sản phẩm</li>
+				</ol>
+			</div>
+			<div class="container">
+				<form action="/dashboard/productTable">
+					<div class="input-group mb-2">
+						<input type="text" name="s" class="form-control" placeholder="Tìm theo tên sản phẩm">
+					</div>
+				</form>
+				<div th:if="${error != null}" id="errorDiv" class="alert alert-danger mb-2">
+					<span th:text="${error}"></span>
+				</div>
+				<div th:if="${success != null}" id="errorDiv" class="alert alert-success mb-2">
+					<span th:text="${success}"></span>
+				</div>
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">Id</th>
+								<th scope="col">Tên sản phẩm</th>
+								<th scope="col">Giá cũ</th>
+								<th scope="col">Giá mới</th>
+								<th scope="col">Số lượng</th>
+								<th scope="col">Thương hiệu</th>
+								<th scope="col">Thể loại</th>
+								<th scope="col">Tạo lúc</th>
+								<th scope="col">Cập nhật lúc</th>
+								<th scope="col"></th>
+								<th scope="col"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="product : ${products}">
+								<th th:text="${product.id}"></th>
+								<td th:text="${product.name}"></td>
+								<td th:text="${product.description}" hidden></td>
+								<td><span th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT') + ' ₫'}"></span></td>
+								<td><span th:text="${#numbers.formatDecimal(product.promotionalPrice, 0, 'POINT', 0, 'POINT') + ' ₫'}"></span></td>
+								<td th:text="${product.quantity}"></td>
+								<td th:text="${product.productBrand != null? product.productBrand.name: ''}"></td>
+								<td th:text="${product.productCategory != null ? product.productCategory.name: ''}"></td>
+								<td th:text="${product.createdAt}"></td>
+								<td th:text="${product.updatedAt}"></td>
+								<td>
+									<a th:href="@{productTable/{id}(id=${product.id})}" class="btn btn-sm btn-success"><i
+											class="fa-solid fa-pen"></i></a>
+									<a th:href="@{productTable/delete/{id}(id=${product.id})}" class="btn btn-sm btn-danger"><i
+											class="fa-solid fa-trash"></i></a>
+								</td>
+								<td>
+									<a th:href="@{productTable/pin/{id}(id=${product.id})}" class="btn btn-sm btn-primary"><i
+											class="fa-solid fa-arrow-up"></i></a>
+									<a th:href="@{productTable/un-pin/{id}(id=${product.id})}"
+										class="btn btn-sm btn-primary"><i class="fa-solid fa-arrow-down"></i></a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+	<th:block th:insert="~{Dashboard/fragments/layout :: footer}"></th:block>
+</body>
+
+</html>

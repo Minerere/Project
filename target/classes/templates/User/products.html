@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Sản phẩm</title>
+	<th:block th:insert="~{User/fragments/layout :: head}"></th:block>
+	<!-- <style>
+		.pagination {
+			display: flex;
+            justify-content: center;
+		}
+		.pagination > .page-item {
+			padding: 0;
+		}
+	</style> -->
+</head>
+
+<body>
+	<th:block th:insert="~{User/fragments/layout :: headerTopLine}"></th:block>
+	<th:block th:insert="~{User/fragments/layout :: navbar}"></th:block>
+	<div class="overlay"></div>
+	<section id="home-section" class="hero container" style="max-height: 300px; margin-top: 30px; overflow: hidden;">
+		<div class="home-slider owl-carousel" style="top: -120px;">
+			<div class="slider-item" style="background-image: url(https://shopdunk.com/images/uploaded/banner/banner%20thang%2011/banner%20iphone%2015%20T11_Danh%20m%E1%BB%A5c.jpg);
+					background-size: 100%; border-radius: 20px;">
+				<div class="overlay"></div>
+				<div class="container">
+					<div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
+					</div>
+				</div>
+
+			</div>
+			<div class="slider-item" style="background-image: url(https://shopdunk.com/images/uploaded/banner/Thang11_1/Danh%20m13.png);
+					background-size: 100%;">
+				<div class="overlay"></div>
+				<div class="container">
+					<div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
+						<div class="col-md-12 ftco-animate text-center">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="slider-item " style=" background-image: url(https://shopdunk.com/images/uploaded/banner/Thang11_1/Danh%20m%E1%BB%A5c12.png);
+					background-size: 100%;">
+				<div class="overlay"></div>
+				<div class="container">
+					<div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
+						<div class="col-md-12 ftco-animate text-center">
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+	<div class="container d-flex">
+		<nav class="filter-outside" style="width: 22%;">
+			<div class="filter-box mt-4 pb-5">
+				<div class="brand-filter">
+					<h6>Thương hiệu</h6>
+					<select class="form-select" id="brandSelector">
+						<option selected>-- Chọn --</option>
+						<option value="-1">Tất cả</option>
+						<option th:each="item : ${brands}" th:value="${item.id}" th:text="${item.name}"></option>
+					</select>
+
+				</div>
+				<div class="brand-filter pt-4">
+					<h6>Thể loại</h6>
+					<select class="form-select" id="categorySelector">
+						<option selected>-- Chọn --</option>
+						<option value="-1">Tất cả</option>
+						<option th:each="item : ${categories}" th:value="${item.id}" th:text="${item.name}"></option>
+					</select>
+
+				</div>
+				<div class="brand-filter pt-4">
+					<h6>Giá</h6>
+					<select class="form-select" id="priceSelector">
+						<option selected>-- Chọn --</option>
+						<option value="-1">Tất cả</option>
+						<option value="1">Dưới 1 triệu</option>
+						<option value="2">Từ 1 triệu - 3 triệu</option>
+						<option value="3">Từ 3 triệu - 5 triệu</option>
+						<option value="4">Từ 5 triệu - 10 triệu</option>
+						<option value="5">Trên 10 triệu</option>
+					</select>
+				</div>
+			</div>
+		</nav>
+		<section class="prod-form" id="prod-form" style="width: 78%">
+			<div class="text-center title mb-4">
+			</div>
+			<div class="container">
+				<div class="row ">	
+					<div th:each="product: ${products}" class="col-4 testimonial-item " th:if="${product.quantity > 0}">
+						<div class="product">
+							<div class="prod-item pb-3 mb-3" data-aos="zoom-in-up">
+								<a th:href="@{'/products/detail/' + ${product.id}}" class="img-prod">
+									<img th:src="${product.productImages.size() > 0 ? product.productImages.get(0).url : ''}"
+										style="width: 150px; height: 200px; object-fit: contain;">
+								</a>
+								<div class="prod-inf pt-3">
+									<h4>
+										<a href="#"><span th:text="${product.name}"></span></a>
+									</h4>
+									<div class=""></div>
+									<div class="">
+										<div class="pricing">
+											<p class="price">
+												<span class="price-sale"
+													th:text="${#numbers.formatDecimal(product.promotionalPrice, 0, 'POINT', 0, 'POINT') + ' ₫'}"></span>
+												<delete class="price-dc"
+													th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT') + ' ₫'}"></delete>
+											</p>
+										</div>
+										<div class="bottom-area">
+											<div class="d-flex">
+												<div class="m-auto d-flex align-items-center">
+													<a th:href="@{'/products/detail/' + ${product.id}}"
+														class="add-to-cart">
+														<span><i class="fa-solid fa-bars"></i></span>
+													</a> <a th:href="@{'/products/detail/' + ${product.id}}"
+														id="btnPayment" class="buy-now" th:attr="data-id=${product.id}"
+														data-quantity="1">
+														<span><i class="fa-solid fa-cart-shopping"
+																id="btnPayment"></i></span>
+													</a> <a th:href="@{'/products/detail/' + ${product.id}}"
+														class="favourite"> <span><i
+																class="fa-solid fa-heart"></i></span>
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+			<!-- <ul class="pagination">
+				<li th:if="${products.hasPrevious()}" class="page-item">
+					<a class="page-link" th:href="@{'?page=' + ${products.getNumber() - 1}}">Previous</a>
+				</li>
+				<li th:each="i : ${#numbers.sequence(0, products.totalPages - 1)}" class="page-item">
+					<a class="page-link" th:href="@{'?page=' + ${i}}">[[${i}]]</a>
+				</li>
+				<li th:if="${products.hasNext()}" class="page-item">
+					<a class="page-link" th:href="@{'?page=' + ${products.getNumber() + 1}}">Next</a>
+				</li>
+			</ul> -->
+	<th:block th:insert="~{User/fragments/layout :: menuBottom}"></th:block>
+	<th:block th:insert="~{User/fragments/layout :: footer}"></th:block>
+
+	<script src="User/css/js/owl.carousel.min.js"></script>
+	<script src="User/css/js/script.js"></script>
+	<script src="User/js/owl.carousel.min.js"></script>
+	<script src="User/js/script.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+	<script src="https://rawgit.com/josecebe/twbs-pagination/master/jquery.twbsPagination.min.js"></script>
+	<script>
+		AOS.init();
+	</script>
+	<script>
+		const brandSelector = document.getElementById('brandSelector')
+		const categorySelector = document.getElementById('categorySelector')
+		const priceSelector = document.getElementById('priceSelector')
+
+		let formData = new FormData();
+
+		brandSelector.onchange = () => {
+			formData.set('b', brandSelector.value)
+			filter()
+		}
+		categorySelector.onchange = () => {
+			formData.set('c', categorySelector.value)
+			filter()
+		}
+		priceSelector.onchange = () => {
+			formData.set('p', priceSelector.value)
+			filter()
+		}
+
+		function filter() {
+			let current = location.search;
+			let finalUrl = '/products?';
+			finalUrl += new URLSearchParams(formData)
+			location.href = finalUrl
+			//location.href = finalUrl;
+		}
+	</script>
+</body>
+
+</html>

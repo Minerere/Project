@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Trang chủ</title>
+	<th:block th:insert="~{User/fragments/layout :: head}"></th:block>
+</head>
+
+<body>
+	<th:block th:insert="~{User/fragments/layout :: headerTopLine}"></th:block>
+	<th:block th:insert="~{User/fragments/layout :: navbar}"></th:block>
+	
+	<!-- overlay -->
+	<div class="overlay"></div>
+	<section id="home-section" class="hero">
+		<div class="home-slider owl-carousel">
+			<div class="slider-item" style="background-image: url('User/image/posterIphone.webp');background-size: cover">
+				<div class="overlay"></div>
+				<div class="container">
+					<div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
+						<div class="col-md-12 ftco-animate text-center">
+							<h1 class="mb-2" data-aos="flip-up" style="font-family: Arial, Helvetica, sans-serif; ">Chúng tôi cung cấp các sản phẩm điện thoại di động chính hãng.</h1>
+							<h2 class="subheading mb-4">Sản phẩm và giá cả đều tốt nhất</h2>
+							<p><a href="/products" class="btn btn-primary">Xem thêm</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="slider-item" style="background-image: url('User/image/iphoneBanner3.jpg'); background-size: cover">
+				<div class="overlay"></div>
+				<div class="container">
+					<div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
+						<div class="col-md-12 ftco-animate text-center">
+							<div class="col-md-12 ftco-animate text-center">
+								<h1 class="mb-2" style="font-family: Arial, Helvetica, sans-serif;">Chúng tôi cung cấp rất nhiều loại sản phẩm điện thoại di động chính hãng</h1>
+								<h2 class="subheading mb-4">Giá hời và sản phẩm tuyệt vời</h2>
+								<p><a href="#" class="btn btn-primary">Xem chi tiết</a></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="home-brand-form" data-aos="zoom-in">
+		<div class="text-center">
+			<h1 class="mb-2 mt-5">Các thương hiệu đồng hành cùng chúng tôi</h1>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 owl-carousel slide2">
+					<div class="product item">
+						<a href="#" class="img-prod"><img class="img-fluid" src="User/image/logo-apple.jpg"></a>
+						<a href="#" class="btn btn-primary">Xem</a>
+					</div>
+					<div class="product item">
+						<a href="#" class="img-prod"><img class="img-fluid" src="User/image/logo-samsung.avif"></a>
+						<a href="#" class="btn btn-primary">Xem</a>
+					</div>
+					<div class="product item">
+						<a href="#" class="img-prod"><img class="img-fluid" src="User/image/logo-xiaomi.jpg"></a>
+						<a href="#" class="btn btn-primary">Xem</a>
+					</div>
+					<div class="product item">
+						<a href="#" class="img-prod"><img class="img-fluid" src="User/image/logo-acer.png"></a>
+						<a href="#" class="btn btn-primary">Xem</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div class="search-other">
+		<div class="container text-center" data-aos="fade-down" data-aos-duration="500" data-aos-once="false">
+			<h3>Bạn đang tìm kiếm điều gì?</h3>
+			<div class="search-group">
+				<form action="/products">
+					<input type="search" name="s" placeholder="Tìm tên sản phẩm">
+					<button class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<section class="info-form mb-5">
+		<div class="container">
+			<div class="row align-items-center text-center">
+				<div class="col-6 back-form" data-aos="zoom-in-right" data-aos-duration="500">
+					<div class="info-description">
+						<h3>Về chúng tôi</h3>
+						<div class="note">
+							<span>
+								Chào mừng đến với MasterBee - nơi chúng tôi chia sẻ nhiệt huyết và cam kết cung cấp
+								sản phẩm và dịch vụ điện tử tốt nhất cho bạn. Với hơn chục năm kinh nghiệm trong lĩnh vực
+								ngành, chúng tôi tự hào là một trong những đơn vị đi đầu trong lĩnh vực này.
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-6 img-form" data-aos="zoom-in-left" data-aos-duration="500">
+					<img src="User/image/logo/global.png">
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="prod-form" id="prod-form-id">
+		<div class="text-center title mb-4">
+			<h1>Sản phẩm nổi bật</h1>
+			<p>từ những thương hiệu hàng đầu</p>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="splide">
+					<div class="splide__track">
+						<ul class="splide__list">
+							<!-- Thêm class splide__slide cho mỗi sản phẩm -->
+							<li th:each="product: ${pinnedProducts}"
+								class="col-3 testimonial-item mt-5 mb-5 splide__slide">
+								<div class="product item">
+									<div class="prod-item pb-3" data-aos="zoom-in-up">
+										<a th:href="@{/products/detail/{product_id} (product_id=${product.id})}"
+											class="img-prod">
+											<img th:src="${product.productImages.size() > 0 ? product.productImages.get(0).url : ''}"
+												style="width: 150px; height: 200px; object-fit: contain;">
+										</a>
+										<div class="prod-inf pt-3">
+											<h4>
+												<a href="#"><span th:text="${product.name}"></span></a>
+											</h4>
+											<div>
+												<div class="pricing">
+													<p class="price">
+														<span class="price-sale"
+															th:text="${#numbers.formatDecimal(product.promotionalPrice, 0, 'POINT', 0, 'POINT') + ' ₫'}"></span>
+														<delete class="price-dc"
+															th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT') + ' ₫'}"></delete>
+													</p>
+												</div>
+												<div class="bottom-area">
+													<div class="d-flex">
+														<div class="m-auto d-flex align-items-center">
+															<a th:href="@{'/products/detail/' + ${product.id}}"
+																class="add-to-cart">
+																<span><i class="fa-solid fa-bars"></i></span>
+															</a>
+															<a th:href="@{'/products/detail/' + ${product.id}}"
+																id="btnPayment" class="buy-now"
+																th:attr="data-id=${product.id}" data-quantity="1">
+																<span><i class="fa-solid fa-cart-shopping"
+																		id="btnPayment"></i></span>
+															</a>
+															<a th:href="@{'/products/detail/' + ${product.id}}"
+																class="favourite">
+																<span><i class="fa-solid fa-heart"></i></span>
+															</a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<!-- Kết thúc mỗi sản phẩm -->
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<th:block th:insert="~{User/fragments/layout :: menuBottom}"></th:block>
+	<th:block th:insert="~{User/fragments/layout :: footer}"></th:block>
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			var splide = new Splide('.splide', {
+				type: 'loop',    // Loại hiển thị loop
+				perPage: 4,      // Số lượng slide hiển thị mỗi lần
+				focus: 'center', // Đưa slide trung tâm
+				autoplay: 'pause',
+			});
+
+			splide.mount();
+		});
+	</script>
+	<script src="User/js/owl.carousel.min.js"></script>
+	<script src="User/js/script.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+	<script>
+		AOS.init();
+	</script>
+</body>
+
+</html>
